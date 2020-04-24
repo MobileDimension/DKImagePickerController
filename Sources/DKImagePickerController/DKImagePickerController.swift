@@ -530,19 +530,19 @@ open class DKImagePickerController: DKUINavigationController, DKImageBaseManager
     }
     
     @objc open func saveImageDataToAlbumForiOS9(_ imageDataWithMetadata: Data, _ completeBlock: @escaping ((_ asset: DKAsset) -> Void)) {
-        var newImageIdentifier: String!
+        var newImageIdentifier: String?
         
         PHPhotoLibrary.shared().performChanges({
             if #available(iOS 9.0, *) {
                 let assetRequest = PHAssetCreationRequest.forAsset()
                 assetRequest.addResource(with: .photo, data: imageDataWithMetadata, options: nil)
-                newImageIdentifier = assetRequest.placeholderForCreatedAsset!.localIdentifier
+                newImageIdentifier = assetRequest.placeholderForCreatedAsset?.localIdentifier
             } else {
                 // Fallback on earlier versions
             }
         }) { (success, error) in
             DispatchQueue.main.async(execute: {
-                if success, let newAsset = PHAsset.fetchAssets(withLocalIdentifiers: [newImageIdentifier], options: nil).firstObject {
+                if success, let identifier = newImageIdentifier, let newAsset = PHAsset.fetchAssets(withLocalIdentifiers: [newImageIdentifier], options: nil).firstObject {
                     completeBlock(DKAsset(originalAsset: newAsset))
                 } else {
                     completeBlock(DKAsset(image: UIImage(data: imageDataWithMetadata)!))
