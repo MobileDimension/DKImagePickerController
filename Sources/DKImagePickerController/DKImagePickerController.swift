@@ -544,8 +544,10 @@ open class DKImagePickerController: DKUINavigationController, DKImageBaseManager
             DispatchQueue.main.async(execute: {
                 if success, let identifier = newImageIdentifier, let newAsset = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil).firstObject {
                     completeBlock(DKAsset(originalAsset: newAsset))
+                } else if let imageMetaData = UIImage(data: imageDataWithMetadata) {
+                    completeBlock(DKAsset(image: imageMetaData))
                 } else {
-                    completeBlock(DKAsset(image: UIImage(data: imageDataWithMetadata)!))
+                    completeBlock(DKAsset(image: UIImage()))
                 }
             })
             
