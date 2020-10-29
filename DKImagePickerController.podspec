@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name          = "DKImagePickerController"
-  s.version       = "4.3.2"
+  s.version       = "4.3.3"
   s.summary       = "DKImagePickerController is a highly customizable, pure-Swift library."
   s.homepage      = "https://github.com/zhangao0086/DKImagePickerController"
   s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -40,14 +40,14 @@ Pod::Spec.new do |s|
 
   s.subspec 'Camera' do |camera|
     camera.dependency 'DKImagePickerController/Core'
-    camera.dependency 'DKCamera'
+    camera.dependency 'DKCamera', :git => 'https://github.com/MobileDimension/DKCamera', :tag => '1.6.9'
 
     camera.source_files = "Sources/Extensions/DKImageExtensionCamera.swift"
   end
 
   s.subspec 'InlineCamera' do |inlineCamera|
     inlineCamera.dependency 'DKImagePickerController/Core'
-    inlineCamera.dependency 'DKCamera'
+    inlineCamera.dependency 'DKCamera', :git => 'https://github.com/MobileDimension/DKCamera', :tag => '1.6.9'
 
     inlineCamera.source_files = "Sources/Extensions/DKImageExtensionInlineCamera.swift"
   end
